@@ -1,0 +1,271 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Brisa Travel: viajes cálidos, cercanos y hechos a tu medida." />
+  <title>Brisa Travel | Viaja bonito</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Fraunces:opsz,wght@9..144,600;9..144,700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    .departure-date { position: absolute; right: 16px; bottom: 16px; padding: 11px 13px; background: var(--coral); color: var(--cream); font-size: 22px; font-weight: 700; letter-spacing: 1px; line-height: 1; }
+    .trip-info .trip-duration { margin-bottom: 8px; color: var(--coral); font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; }
+    .trip-info .trip-meta { align-items: flex-start; gap: 10px; margin-top: 2px; }
+    .trip-meta strong { max-width: 80%; line-height: 1.35; }
+    .trip-meta span { white-space: nowrap; }
+    .trip-extras { display: grid; gap: 5px; margin: 16px 0 0; padding: 13px 0 0; border-top: 1px solid var(--line); list-style: none; font-size: 12px; line-height: 1.35; }
+    .trip-extras li::before { content: '+'; color: var(--coral); font-weight: 700; margin-right: 7px; }
+    .trip-info .trip-title { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin-bottom: 7px; }
+    .trip-info .trip-title h3 { margin: 0; }
+    .trip-price { flex: 0 0 auto; background: var(--coral); color: #fff; padding: 5px 9px; font-size: 15px; font-weight: 700; letter-spacing: .4px; line-height: 1; box-shadow: 3px 3px 0 var(--yellow); }
+    .button { position: relative; overflow: hidden; isolation: isolate; border: 1px solid transparent; box-shadow: 4px 4px 0 var(--coral); transition: transform .25s ease, box-shadow .25s ease, background .25s ease; }
+    .button::after { content: ''; position: absolute; z-index: -1; top: -120%; left: -35%; width: 35%; height: 340%; background: rgba(255,255,255,.22); transform: rotate(24deg); transition: left .55s ease; }
+    .button:hover { transform: translate(-3px, -3px); box-shadow: 8px 8px 0 var(--coral); }
+    .button:hover::after { left: 120%; }
+    .circle-btn { transition: transform .25s ease, background .25s ease, box-shadow .25s ease; }
+    .circle-btn:not(:disabled):hover { transform: translateY(-3px) rotate(-8deg); box-shadow: 3px 4px 0 var(--coral); }
+    .contact-bottom { grid-template-columns: 1fr 1fr; }
+    .contact-map { grid-column: 1 / -1; margin-top: 18px; }
+    .contact-map iframe { display: block; width: 100%; height: 310px; border: 0; filter: saturate(.9) contrast(1.04); }
+    .social-links { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 13px; }
+    .social-link { display: inline-grid; place-items: center; width: 39px; height: 39px; border: 1px solid rgba(22,61,56,.48); border-radius: 50%; font-size: 17px; transition: transform .2s ease, color .2s ease, background .2s ease; }
+    .social-link:hover { background: var(--ink); color: var(--cream); transform: translateY(-4px) rotate(8deg); }
+    .whatsapp { overflow: visible; background: #25d366; font-size: 26px; transition: transform .25s ease, box-shadow .25s ease; }
+    .whatsapp::before { content: ''; position: absolute; inset: -8px; z-index: -1; border-radius: 50%; background: rgba(37,211,102,.28); box-shadow: 0 0 0 8px rgba(37,211,102,.09), 0 0 24px rgba(37,211,102,.5); animation: whatsapp-pulse 2.4s ease-out infinite; }
+    .whatsapp:hover { width: 59px; transform: translateY(-5px) rotate(-6deg); box-shadow: 0 11px 22px rgba(22,61,56,.27); }
+    .whatsapp span { right: 70px; border-radius: 0; }
+    .whatsapp:hover span { opacity: 1; }
+    .menu-toggle { display: none; }
+    .menu-icon { display: grid; gap: 4px; width: 22px; }
+    .menu-icon i { display: block; width: 22px; height: 2px; background: var(--coral); transition: transform .25s ease, opacity .25s ease; }
+    .menu-toggle.is-open .menu-icon i:first-child { transform: translateY(6px) rotate(45deg); }
+    .menu-toggle.is-open .menu-icon i:nth-child(2) { opacity: 0; }
+    .menu-toggle.is-open .menu-icon i:last-child { transform: translateY(-6px) rotate(-45deg); }
+    .trip-request { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 18px; padding: 12px 15px; border: 1px solid var(--coral); border-radius: 8px; background: var(--coral); color: var(--cream); font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: .7px; transition: color .2s ease, background .2s ease, border-color .2s ease, transform .2s ease; }
+    .trip-request span { font-size: 20px; }
+    .trip-request:hover, .trip-request:focus-visible, .trip-request:active { border-color: var(--ink); background: var(--ink); color: var(--cream); transform: translateY(-2px); }
+    .contact-request { display: grid; grid-template-columns: auto 1fr; gap: 3px 13px; align-items: center; margin-top: 28px; padding: 16px 18px; border: 1px solid var(--coral); border-radius: 8px; background: var(--coral); color: var(--cream); transition: background .2s ease, border-color .2s ease, color .2s ease, transform .2s ease; }
+    .contact-request .request-icon { grid-row: span 2; font-size: 28px; color: var(--coral); }
+    .contact-request span:nth-child(2) { font-size: 14px; font-weight: 700; }
+    .contact-request small { font-size: 12px; line-height: 1.4; color: inherit; opacity: .86; }
+    .contact-request:hover, .contact-request:focus-visible, .contact-request:active { border-color: var(--ink); background: var(--ink); color: var(--cream); transform: translateY(-2px); }
+    .contact-layout { display: grid; grid-template-columns: minmax(0, 1fr) minmax(320px, .9fr); gap: 7vw; align-items: stretch; }
+    .contact-top { display: flex; flex-direction: column; align-items: flex-start; gap: 25px; }
+    .contact-top h2 { margin: 0 0 12px; }
+    .contact-top > div { width: 100%; }
+    .contact-top .button { margin-top: auto; }
+    .contact-photo { min-height: 460px; position: relative; overflow: hidden; }
+    .contact-photo::after { content: ''; position: absolute; inset: 14px -14px -14px 14px; border: 1px solid var(--coral); pointer-events: none; }
+    .contact-map { grid-column: auto; margin-top: 42px; }
+    @keyframes whatsapp-pulse { 0%, 100% { opacity: .65; transform: scale(.92); } 50% { opacity: 1; transform: scale(1.08); } }
+    @media (max-width: 800px) {
+      .site-header { position: sticky; top: 0; }
+      .menu-toggle { display: inline-flex; align-items: center; gap: 10px; border: 0; background: none; color: var(--ink); font: 700 12px var(--sans); text-transform: uppercase; letter-spacing: 1px; cursor: pointer; }
+      .main-nav { display: none; position: absolute; top: 70px; left: 0; right: 0; padding: 20px 6vw 25px; background: var(--cream); border-bottom: 1px solid var(--line); flex-direction: column; gap: 18px; }
+      .main-nav a { padding: 10px 0; border-bottom: 1px solid var(--line); font-size: 14px; }
+      .main-nav.is-open { display: flex; }
+      .header-cta { display: none; }
+      .hero { padding-top: 58px; }
+      .hero-actions { align-items: flex-start; flex-direction: column; gap: 20px; }
+      .hero-art { margin-top: 58px; }
+      .section-heading { align-items: flex-end; }
+      .trip-card { flex-basis: min(82vw, 340px); }
+      .trip-image { height: min(78vw, 350px); }
+      .trip-info h3 { font-size: 24px; }
+      .trip-price { font-size: 14px; }
+      .custom-copy, .about-copy { max-width: 620px; }
+      .contact-bottom { grid-template-columns: 1fr; }
+      .contact-map { grid-column: auto; }
+      .contact-layout { grid-template-columns: 1fr; gap: 42px; }
+      .contact-photo { min-height: 300px; }
+      .contact-top .button { margin-top: 0; }
+    }
+    @media (max-width: 430px) {
+      .site-header { padding-left: 5vw; padding-right: 5vw; }
+      .hero, .section-pad { padding-left: 5vw; padding-right: 5vw; }
+      .hero h1 { font-size: 15vw; letter-spacing: -2px; }
+      .hero-art { height: 360px; margin-left: 0; margin-right: 12px; }
+      .sun-badge { right: -12px; width: 96px; height: 96px; }
+      .sun-badge strong { font-size: 21px; }
+      .hero-sticker { left: -10px; width: 62px; height: 62px; font-size: 32px; }
+      .section-heading { display: block; }
+      .carousel-controls { margin-top: 28px; }
+      .contact-bottom { grid-template-columns: 1fr; }
+      .contact-bottom div:last-child { grid-column: auto; }
+      .contact-layout { gap: 34px; }
+      .contact-photo { min-height: 250px; }
+      footer { grid-template-columns: 1fr; }
+      footer small { justify-self: start; }
+    }
+  </style>
+  <script defer src="script.js"></script>
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="#inicio" aria-label="Brisa Travel, inicio"><span>brisa</span><i>travel</i></a>
+    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="main-navigation">Menú <span class="menu-icon" aria-hidden="true"><i></i><i></i><i></i></span></button>
+    <nav class="main-nav" id="main-navigation" aria-label="Navegación principal">
+      <a href="#servicios">Paquetes de Viajes</a>
+      <a href="#personaliza">Experiencias</a>
+      <a href="#grupales">Viajes Grupales</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero" id="inicio">
+      <div class="hero-copy">
+        <p class="eyebrow">Agencia de viajes establecida desde 2016 <span>✳</span></p>
+        <h1>Viaja bien.<br /><em>Nosotros</em><br />nos encargamos.</h1>
+        <p class="hero-text">Servicios turísticos confiables, atención personalizada y experiencias diseñadas para que disfrutes cada etapa del viaje.</p>
+        <div class="hero-actions"><a class="button button-dark" href="#servicios">Ver Paquetes</a><a class="text-link" href="#contacto">Solicitar asesoría</a></div>
+      </div>
+      <div class="hero-art" aria-label="Playa tropical al atardecer">
+        <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=85" alt="Playa tropical con palmeras y mar turquesa" />
+        <div class="sun-badge"><span>Turismo responsable y de calidad</span></div>
+        <div class="hero-sticker">☼</div>
+      </div>
+      <div class="scroll-cue">Scroll para descubrir <span>↓</span></div>
+    </section>
+
+
+    <!--Seccion sobre la informacion de la empresa-->
+
+    <section class="custom section-pad" id="personaliza"><div class="custom-image"><img src="https://images.unsplash.com/photo-1527631746610-bca00a040d60?auto=format&fit=crop&w=1200&q=85" alt="Dos viajeros disfrutando de una playa" /><span class="image-note">El viaje de tus sueños<br /><b>comienza aquí</b></span></div><div class="custom-copy"><h2>Tu aventura por Venezuela<br /><em>empieza con Brisa Travel</em></h2>
+      <p>Somos una agencia apasionada por mostrar lo mejor de Venezuela, desde 
+        sus playas hasta sus picos andinos. Nos encargamos de cada detalle de tu itinerario para brindarte un viaje seguro, cómodo y sin complicaciones.</p>
+        <ul>
+          <li><span>*</span>Tu seguridad y comodidad son nuestra prioridad</li>
+          <li><span>*</span>Acompañamiento personalizado en cada destino</li>
+          <li><span>*</span>Experiencias respaldadas por expertos locales</li>
+        </ul>
+      </div>
+    </section>
+
+
+    <!--Seccion sobre los servicios ofrecidos-->
+
+    <section class="trips section-pad" id="servicios">
+      <div class="section-heading"><div><h2>Descubre<br /><em>las Proximas Aventuras</em></h2></div><div class="carousel-controls"><button class="circle-btn prev" aria-label="Servicio anterior">←</button><button class="circle-btn next" aria-label="Siguiente servicio">→</button></div></div>
+      <div class="carousel-viewport"><div class="trip-track">
+        <article class="trip-card">
+          <div class="trip-image">
+            <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=900&q=85" alt="Playa de Mochima" />
+            <span class="trip-tag">Anzoátegui</span>
+            <time class="departure-date" datetime="2026-10-09">09 OCT</time></div><div class="trip-info"><div class="trip-title"><h3>Mochima</h3><span class="trip-price">$40</span></div><p class="trip-duration">3 días · 3 noches</p><p>Salidas: Valencia, Maracay y Caracas.</p><div class="trip-meta">
+            <strong>Visitas: Isla Piscina, Playa Manare y Mochima</strong><span>3D / 3N</span></div>
+            <ul class="trip-extras">
+              <li>Habitación extra</li>
+              <li>Almuerzo playero</li>
+              <li>Paseo en lancha adicional</li>
+            </ul>
+            <a class="trip-request" href="https://wa.me/584121234567?text=Hola%20Brisa%20Travel%2C%20quiero%20solicitar%20informaci%C3%B3n%20sobre%20el%20paquete%20a%20Mochima." target="_blank" rel="noreferrer">Solicitar este paquete</a>
+          </div>
+        </article>
+
+        <article class="trip-card">
+          <div class="trip-image">
+            <img src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=900&q=85" alt="Montañas andinas de Mérida" />
+            <span class="trip-tag">Mérida</span>
+            <time class="departure-date" datetime="2026-10-16">16 OCT</time></div><div class="trip-info"><div class="trip-title"><h3>Mérida</h3><span class="trip-price">$95</span></div><p class="trip-duration">4 días · 3 noches</p><p>Salidas: Valencia, Maracay y Caracas.</p><div class="trip-meta">
+              <strong>Visitas: Teleférico, Mucuchíes y Laguna de Mucubají</strong><span>4D / 3N</span></div>
+              <ul class="trip-extras">
+                <li>Habitación extra</li>
+                <li>Entrada al teleférico</li>
+                <li>Comidas no incluidas</li>
+              </ul>
+              <a class="trip-request" href="https://wa.me/584121234567?text=Hola%20Brisa%20Travel%2C%20quiero%20solicitar%20informaci%C3%B3n%20sobre%20el%20paquete%20a%20M%C3%A9rida." target="_blank" rel="noreferrer">Solicitar este paquete</a>
+            </div>
+        </article>
+
+        <article class="trip-card">
+          <div class="trip-image">
+            <img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=900&q=85" alt="Playa de Morrocoy" />
+            <span class="trip-tag">Falcón</span><time class="departure-date" datetime="2026-10-23">23 OCT</time></div><div class="trip-info"><div class="trip-title"><h3>Morrocoy</h3><span class="trip-price">$55</span></div><p class="trip-duration">3 días · 2 noches</p><p>Salidas: Valencia, Maracay y Caracas.</p><div class="trip-meta">
+              <strong>Visitas: Cayo Sombrero, Cayo Sal y Tucacas</strong><span>3D / 2N</span></div>
+              <ul class="trip-extras">
+                <li>Habitación extra</li>
+                <li>Almuerzo playero</li>
+                <li>Uso de toldos y sillas</li>
+              </ul>
+              <a class="trip-request" href="https://wa.me/584121234567?text=Hola%20Brisa%20Travel%2C%20quiero%20solicitar%20informaci%C3%B3n%20sobre%20el%20paquete%20a%20Morrocoy." target="_blank" rel="noreferrer">Solicitar este paquete</a>
+            </div>
+        </article>
+
+        <article class="trip-card">
+          <div class="trip-image"><img src="https://images.unsplash.com/photo-1511497584788-876760111969?auto=format&fit=crop&w=900&q=85" alt="Paisaje natural de la Gran Sabana" />
+            <span class="trip-tag">Bolívar</span><time class="departure-date" datetime="2026-11-06">06 NOV</time></div><div class="trip-info"><div class="trip-title"><h3>Gran Sabana</h3><span class="trip-price">$135</span></div><p class="trip-duration">5 días · 4 noches</p><p>Salidas: Valencia, Maracay y Caracas.</p><div class="trip-meta">
+              <strong>Visitas: Quebrada de Jaspe, Kumarakapay y La Gran Sabana</strong><span>5D / 4N</span></div>
+              <ul class="trip-extras">
+                <li>Habitación extra</li>
+                <li>Almuerzos en ruta</li>
+                <li>Excursión opcional</li>
+              </ul>
+              <a class="trip-request" href="https://wa.me/584121234567?text=Hola%20Brisa%20Travel%2C%20quiero%20solicitar%20informaci%C3%B3n%20sobre%20el%20paquete%20a%20Gran%20Sabana." target="_blank" rel="noreferrer">Solicitar este paquete</a>
+            </div>
+          </article>
+
+        <article class="trip-card">
+          <div class="trip-image">
+            <img src="https://images.unsplash.com/photo-1502680390469-be75c86b636f?auto=format&fit=crop&w=900&q=85" alt="Costa tropical de Isla de Margarita" />
+            <span class="trip-tag">Nueva Esparta</span><time class="departure-date" datetime="2026-11-20">20 NOV</time></div><div class="trip-info"><div class="trip-title"><h3>Isla de Margarita</h3><span class="trip-price">$85</span></div><p class="trip-duration">4 días · 3 noches</p><p>Salidas: Valencia, Maracay y Caracas.</p><div class="trip-meta">
+              <strong>Visitas: Playa El Agua, Pampatar y La Restinga</strong><span>4D / 3N</span></div>
+              <ul class="trip-extras">
+                <li>Habitación extra</li>
+                <li>Almuerzo playero</li>
+                <li>Paseo a Coche</li>
+              </ul>
+              <a class="trip-request" href="https://wa.me/584121234567?text=Hola%20Brisa%20Travel%2C%20quiero%20solicitar%20informaci%C3%B3n%20sobre%20el%20paquete%20a%20Isla%20de%20Margarita." target="_blank" rel="noreferrer">Solicitar este paquete</a>
+            </div>
+          </article>
+
+        <article class="trip-card">
+          <div class="trip-image">
+            <img src="https://images.unsplash.com/photo-1464278533981-50106e6176b1?auto=format&fit=crop&w=900&q=85" alt="Bosque de montaña en Yacambú" />
+            <span class="trip-tag">Lara</span><time class="departure-date" datetime="2026-12-04">04 DIC</time></div><div class="trip-info"><div class="trip-title"><h3>Parque Nacional Yacambú</h3><span class="trip-price">$65</span></div><p class="trip-duration">2 días · 1 noche</p><p>Salidas: Valencia, Maracay y Caracas.</p><div class="trip-meta">
+              <strong>Visitas: Embalse Yacambú, senderos y Sanare</strong><span>2D / 1N</span></div>
+              <ul class="trip-extras">
+                <li>Habitación extra</li>
+                <li>Almuerzo campestre</li>
+                <li>Actividades de aventura</li>
+              </ul>
+              <a class="trip-request" href="https://wa.me/584121234567?text=Hola%20Brisa%20Travel%2C%20quiero%20solicitar%20informaci%C3%B3n%20sobre%20el%20paquete%20a%20Yacamb%C3%BA." target="_blank" rel="noreferrer">Solicitar este paquete</a>
+            </div>
+          </article>
+          
+      </div></div><div class="carousel-progress"><span></span></div>
+    </section>
+
+
+    <!--Seccion extra personalizada-->
+
+    <section class="about section-pad" id="grupales"><div class="about-copy">
+    <h2>Viajes Privados<br /><em>Grupales y Corporativos</em></h2>
+    <p>Diseñamos experiencias corporativas y viajes en grupo a la medida por toda Venezuela. 
+      Nos encargamos de cada detalle logístico para que tu equipo disfrute al máximo.</p>
+      <ul>
+          <li><span></span>Team building, convenciones, eventos y escapadas de grupo</li>
+          <li><span></span>Traslados, hospedaje y actividades personalizadas</li>
+          <li><span></span>Coordinación puntual, comodidad y adaptación a tu presupuesto</li>
+        </ul>
+      <a class="arrow-link contact-request" href="https://wa.me/584121234567?text=Hola%20Brisa%20Travel%2C%20quiero%20solicitar%20informaci%C3%B3n%20sobre%20viajes%20grupales%20o%20corporativos." target="_blank" rel="noreferrer"><span class="request-icon">🚌</span><span>Solicitar información</span><small>Cuéntanos qué tienes en mente y diseñamos la ruta contigo.</small></a></div><div class="about-photo"><img src="https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?auto=format&fit=crop&w=1000&q=85" alt="Costa tropical venezolana para viajes grupales" />
+        <div class="years"><strong>8</strong><span>años<br />creando rutas</span></div></div></section>
+
+
+    <!-- Sede, ubicacion y canales de atención -->
+    <section class="contact section-pad" id="contacto">
+      <div class="contact-layout"><div class="contact-top">
+        <h2>Encuéntranos<br /></h2>
+        <div><span>Nuestra ubicación</span><p>📍 Av. Francisco de Miranda, Torre Brisa, Piso 5, Oficina 5-B.<br />Chacao, Caracas, Venezuela.</p><p><small>Dirección con fines demostrativos para la maqueta web.</small></p></div>
+        <div><span>Horarios</span><p>Lun - Vie · 9:00 a 18:00<br />Sábados · 10:00 a 14:00</p></div>
+        <div><span>Síguenos</span><div class="social-links"><a class="social-link" href="https://www.instagram.com/" target="_blank" rel="noreferrer" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a><a class="social-link" href="https://t.me/" target="_blank" rel="noreferrer" aria-label="Telegram"><i class="fa-brands fa-telegram"></i></a><a class="social-link" href="https://www.tiktok.com/" target="_blank" rel="noreferrer" aria-label="TikTok"><i class="fa-brands fa-tiktok"></i></a></div></div>
+        <a class="button button-dark" href="https://wa.me/584121234567" target="_blank" rel="noreferrer">Escribir por WhatsApp</a></div><div class="contact-photo"><img src="https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=1000&q=85" alt="Interior de una sede de atención profesional" /></div></div><div class="contact-map"><iframe title="Mapa demostrativo de la sede en Chacao" src="https://www.google.com/maps?q=Av.%20Francisco%20de%20Miranda%2C%20Chacao%2C%20Caracas%2C%20Venezuela&z=16&output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe></div></section>
+  </main>
+
+  
+  <footer><a class="brand" href="#inicio"><span>brisa</span><i>travel</i></a><p>Hecho para perderse bonito.</p><small>© 2024 Brisa Travel</small></footer>
+  <a class="whatsapp" href="https://wa.me/584121234567" target="_blank" rel="noreferrer" aria-label="Contactar por WhatsApp"><i class="fa-brands fa-whatsapp" aria-hidden="true"></i><span>¿Hablamos?</span></a>
+</body>
+</html>
