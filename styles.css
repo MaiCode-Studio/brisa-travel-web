@@ -215,6 +215,7 @@ em {
 .section-heading h2,
 .custom h2,
 .about h2,
+.faq h2,
 .contact h2 {
   font-family: var(--serif);
   font-size: clamp(42px, 5.4vw, 75px);
@@ -410,6 +411,54 @@ em {
   letter-spacing: 1px;
   text-align: center;
 }
+.faq {
+  display: grid;
+  grid-template-columns: 0.8fr 1.2fr;
+  gap: 8vw;
+  align-items: start;
+  background: #e2ebc9;
+}
+.faq-heading .eyebrow {
+  margin-top: 0;
+}
+.faq-list {
+  border-top: 1px solid var(--line);
+}
+.faq-item {
+  border-bottom: 1px solid var(--line);
+  padding: 22px 0;
+}
+.faq-item summary {
+  cursor: pointer;
+  list-style: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  font-family: var(--serif);
+  font-size: 23px;
+  font-weight: 600;
+}
+.faq-item summary::-webkit-details-marker {
+  display: none;
+}
+.faq-item summary::after {
+  content: "+";
+  color: var(--coral);
+  font-family: var(--sans);
+  font-size: 26px;
+  font-weight: 400;
+}
+.faq-item[open] summary::after {
+  content: "−";
+}
+.faq-item p {
+  max-width: 600px;
+  margin: 14px 35px 0 0;
+  color: rgba(22, 61, 56, 0.76);
+  font-size: 15px;
+  line-height: 1.6;
+}
 .contact {
   background: var(--yellow);
 }
@@ -518,6 +567,7 @@ footer small {
   }
   .custom,
   .about,
+  .faq,
   .contact-top {
     grid-template-columns: 1fr;
     gap: 45px;
@@ -525,6 +575,7 @@ footer small {
   .section-heading h2,
   .custom h2,
   .about h2,
+  .faq h2,
   .contact h2 {
     font-size: clamp(45px, 13vw, 68px);
   }
